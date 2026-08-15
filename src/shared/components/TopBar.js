@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import Svg, { Path, Rect } from 'react-native-svg';
 import Icon from './Icon';
 import { COLORS } from '../theme/colors';
@@ -16,7 +16,7 @@ export default function TopBar({ screenName }) {
           </Svg>
         </View>
         <View style={s.titles}>
-          <Text style={s.brand}>Maqām</Text>
+          <Text style={s.brand}>الْمِنْهَجُ الْمُحَمَّدِيُّ</Text>
           <Text style={s.screen}>{screenName}</Text>
         </View>
       </View>
@@ -28,15 +28,79 @@ export default function TopBar({ screenName }) {
   );
 }
 
-const s=StyleSheet.create({
-  bar:{height:74,paddingTop:18,paddingHorizontal:20,flexDirection:'row',alignItems:'center',justifyContent:'space-between',backgroundColor:COLORS.bg,borderBottomWidth:1,borderBottomColor:COLORS.borderSoft},
-  id:{flexDirection:'row',alignItems:'center',gap:11},
-  mark:{width:34,height:34,borderRadius:10,backgroundColor:COLORS.surface,borderWidth:1,borderColor:COLORS.border,alignItems:'center',justifyContent:'center'},
-  titles:{flexDirection:'column',lineHeight:1.15},
-  brand:{fontSize:17,fontWeight:'600',color:COLORS.text1},
-  screen:{fontSize:10,letterSpacing:1.4,textTransform:'uppercase',color:COLORS.text3,marginTop:1},
-  right:{flexDirection:'row',alignItems:'center',gap:8},
-  streak:{height:34,paddingHorizontal:8,borderRadius:17,flexDirection:'row',alignItems:'center',gap:5},
-  streakText:{color:COLORS.goldHi,fontWeight:'600',fontSize:12},
-  aux:{width:34,height:34,borderRadius:17,alignItems:'center',justifyContent:'center'}
+const s = StyleSheet.create({
+  bar: {
+    height: 88,              // was 74 — taller bar
+    paddingTop: 26,          // more top breathing room
+    paddingBottom: 10,       // bottom breathing room
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.bg,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.borderSoft,
+  },
+  id: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 11,
+  },
+  mark: {
+    width: 36,               // slightly bigger icon
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  titles: {
+    flexDirection: 'column',
+  },
+  brand: {
+    fontSize: 16,            // slightly bigger title
+    fontWeight: '700',
+    color: COLORS.goldHi,
+    lineHeight: 24,
+    fontFamily: Platform.select({
+      ios: 'GeezaPro-Bold',
+      android: 'sans-serif-medium',
+    }),
+    textAlign: 'right',
+    writingDirection: 'rtl',
+  },
+  screen: {
+    fontSize: 10,
+    letterSpacing: 1.4,
+    textTransform: 'uppercase',
+    color: COLORS.text3,
+    marginTop: 3,
+  },
+  right: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  streak: {
+    height: 36,
+    paddingHorizontal: 8,
+    borderRadius: 17,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  streakText: {
+    color: COLORS.goldHi,
+    fontWeight: '600',
+    fontSize: 12,
+  },
+  aux: {
+    width: 36,
+    height: 36,
+    borderRadius: 17,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
