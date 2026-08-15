@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Text, StyleSheet, View, Easing } from 'react-native';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
+import { COLORS } from '../theme/colors';
 
 export default function SufiCard({ item, index, isActive }) {
   const anim = useRef(new Animated.Value(0)).current;
@@ -8,9 +9,9 @@ export default function SufiCard({ item, index, isActive }) {
   useEffect(() => {
     Animated.timing(anim, {
       toValue: 1,
-      duration: 900,                          // slower entrance
-      delay: index * 120,                     // staggered slower
-      easing: Easing.out(Easing.cubic),       // smooth deceleration
+      duration: 900,
+      delay: index * 120,
+      easing: Easing.out(Easing.cubic),
       useNativeDriver: true,
     }).start();
   }, []);
@@ -33,16 +34,23 @@ export default function SufiCard({ item, index, isActive }) {
         },
       ]}
     >
-      {/* Full-card gradient */}
+      {/* Smooth gradient background */}
       <View style={s.bg}>
         <Svg width="100%" height="100%">
           <Defs>
             <LinearGradient id={`grad${index}`} x1="0" y1="0" x2="1" y2="1">
               <Stop offset="0" stopColor={item.color[0]} />
-              <Stop offset="1" stopColor={item.color[1]} />
+              <Stop offset="0.5" stopColor={item.color[1]} />
+              <Stop offset="1" stopColor={item.color[0]} />
+            </LinearGradient>
+            <LinearGradient id={`shine${index}`} x1="0" y1="0" x2="1" y2="0">
+              <Stop offset="0" stopColor="#fff" stopOpacity="0" />
+              <Stop offset="0.5" stopColor="#fff" stopOpacity="0.06" />
+              <Stop offset="1" stopColor="#fff" stopOpacity="0" />
             </LinearGradient>
           </Defs>
           <Rect x="0" y="0" width="100%" height="100%" rx={24} fill={`url(#grad${index})`} />
+          <Rect x="0" y="0" width="100%" height="100%" rx={24} fill={`url(#shine${index})`} />
         </Svg>
       </View>
 
@@ -97,12 +105,12 @@ const s = StyleSheet.create({
   },
   badge: {
     alignSelf: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    backgroundColor: 'rgba(255,255,255,0.12)',
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 999,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.15)',
+    borderColor: 'rgba(255,255,255,0.18)',
   },
   badgeText: {
     color: '#fff',
