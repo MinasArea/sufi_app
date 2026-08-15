@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Maqam",
+    "slug": "maqam-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "splash": { "backgroundColor": "#0A2A1E" },
+    "android": { "package": "com.maqam.mobile" }
+  }
+}
