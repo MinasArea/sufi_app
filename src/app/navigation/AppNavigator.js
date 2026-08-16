@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar, View, StyleSheet } from 'react-native';
+import { StatusBar, View, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import TopBar from '../../shared/components/TopBar';
 import BottomTabs from '../../shared/components/BottomTabs';
@@ -24,13 +24,11 @@ export default function AppNavigator() {
   const [activeTab, setActiveTab] = useState('home');
   const [libraryCategory, setLibraryCategory] = useState(null);
 
-  // When bottom tab changes, reset library sub-screen
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     if (tab !== 'library') setLibraryCategory(null);
   };
 
-  // Library hub → category list
   const handleLibraryCategory = (category) => {
     setLibraryCategory(category);
   };
@@ -62,11 +60,24 @@ export default function AppNavigator() {
 
   return (
     <SafeAreaView style={s.safe}>
-      <StatusBar barStyle="light-content" backgroundColor={COLORS.black} />
+      <StatusBar barStyle="light-content" backgroundColor="#0D1F17" />
       <View style={s.app}>
+        {/* NEW background image — baground2 */}
+        <Image
+          source={require('../../../assets/baground.jpg')}
+          style={s.bg}
+          resizeMode="cover"
+        />
+
+        {/* Stars */}
         <ScatteredStars count={50} />
+
+        {/* Sticky blur header */}
         <TopBar screenName={TAB_NAMES[activeTab]} />
+
+        {/* Content */}
         <View style={s.body}>{renderScreen()}</View>
+
         <BottomTabs active={activeTab} onNavigate={handleTabChange} />
       </View>
     </SafeAreaView>
@@ -74,7 +85,23 @@ export default function AppNavigator() {
 }
 
 const s = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: COLORS.black },
-  app: { flex: 1, backgroundColor: COLORS.bg },
-  body: { flex: 1, position: 'relative', zIndex: 1 },
+  safe: { flex: 1, backgroundColor: '#0D1F17' },
+  app: { flex: 1, position: 'relative' },
+  bg: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: 0,
+    transform: [{ scaleY: -1 }], // flipped vertically
+  },
+  body: { 
+    flex: 1, 
+    position: 'relative', 
+    zIndex: 1,
+    paddingTop: 90,
+  },
 });

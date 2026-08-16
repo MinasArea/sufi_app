@@ -30,17 +30,11 @@ export default function LibraryCategoryScreen({ category, onBack }) {
   const renderItem = ({ item }) => (
     <Pressable style={s.row}>
       <View style={s.iconBox}>
-        <Icon
-          name={category === 'videos' ? 'play' : category === 'qasaid' ? 'music' : 'book'}
-          size={18}
-          color={COLORS.goldHi}
-        />
+        <Icon name={category === 'videos' ? 'play' : category === 'qasaid' ? 'music' : 'book'} size={18} color={COLORS.goldHi} />
       </View>
       <View style={s.text}>
         <Text style={s.title}>{item.title}</Text>
-        <Text style={s.sub}>
-          {item.author} · {item.duration || item.pages + ' pages'}
-        </Text>
+        <Text style={s.sub}>{item.author} · {item.duration || item.pages + ' pages'}</Text>
       </View>
       <Text style={s.chev}>›</Text>
     </Pressable>
@@ -72,7 +66,7 @@ export default function LibraryCategoryScreen({ category, onBack }) {
 }
 
 const s = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: COLORS.bg },
+  screen: { flex: 1 }, // NO backgroundColor
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -81,34 +75,34 @@ const s = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.borderSoft,
+    borderBottomColor: 'rgba(255,255,255,0.08)',
   },
   backBtn: { paddingVertical: 4 },
   backText: { color: COLORS.gold, fontSize: 14, fontWeight: '600' },
-  headerTitle: { fontSize: 18, fontWeight: '700', color: COLORS.text1 },
+  headerTitle: { fontSize: 18, fontWeight: '700', color: '#F5F5F0' },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 13,
     padding: 14,
     borderRadius: 16,
-    backgroundColor: COLORS.surface,
+    backgroundColor: 'rgba(13,31,23,0.45)', // glass
     borderWidth: 1,
-    borderColor: COLORS.borderSoft,
+    borderColor: 'rgba(255,255,255,0.08)',
     marginBottom: 10,
   },
   iconBox: {
     width: 40,
     height: 40,
     borderRadius: 10,
-    backgroundColor: COLORS.surface2,
+    backgroundColor: 'rgba(27,67,50,0.30)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   text: { flex: 1 },
-  title: { fontSize: 15, color: COLORS.text1, fontWeight: '600', marginBottom: 2 },
-  sub: { fontSize: 12, color: COLORS.text3 },
-  chev: { fontSize: 22, color: COLORS.text3 },
+  title: { fontSize: 15, color: '#F5F5F0', fontWeight: '600', marginBottom: 2 },
+  sub: { fontSize: 12, color: 'rgba(245,245,240,0.6)' },
+  chev: { fontSize: 22, color: 'rgba(245,245,240,0.4)' },
   empty: { marginTop: 60, alignItems: 'center' },
-  emptyText: { color: COLORS.text3, fontSize: 14, fontStyle: 'italic' },
+  emptyText: { color: 'rgba(245,245,240,0.5)', fontSize: 14, fontStyle: 'italic' },
 });

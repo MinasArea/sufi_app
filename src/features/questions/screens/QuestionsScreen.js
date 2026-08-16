@@ -1,1 +1,76 @@
-import React,{useState} from 'react'; import {Pressable,ScrollView,Text,TextInput,View,StyleSheet} from 'react-native'; import {COLORS} from '../../../shared/theme/colors'; import {sampleQuestions} from '../data/questionsData'; export default function QuestionsScreen(){const [name,setName]=useState('');const [body,setBody]=useState('');const [status,setStatus]=useState('');const [items,setItems]=useState(sampleQuestions); const submit=()=>{if(!body.trim())return;setItems([{name:name.trim()||'Anonymous',body:body.trim(),createdAt:new Date().toISOString()},...items]);setName('');setBody('');setStatus('Placed in the circle.');setTimeout(()=>setStatus(''),3500)};return <ScrollView style={s.screen} contentContainerStyle={s.content}><Text style={s.eyebrow}>ASK A QUESTION</Text><View style={s.form}><Text style={s.label}>NAME (OPTIONAL)</Text><TextInput value={name} onChangeText={setName} placeholder="Leave blank to stay anonymous" placeholderTextColor={COLORS.text3} style={s.input}/><Text style={s.label}>YOUR QUESTION</Text><TextInput value={body} onChangeText={setBody} placeholder="What's on your heart?" placeholderTextColor={COLORS.text3} multiline numberOfLines={4} style={[s.input,s.area]}/><View style={s.submitRow}><Pressable onPress={submit} style={s.button}><Text style={s.buttonText}>Submit</Text></Pressable><Text style={s.status}>{status}</Text></View><Text style={s.hint}>Visible to everyone who opens this app — skip personal details.</Text></View>{items.map((q,i)=><View key={`${q.createdAt}-${i}`} style={s.card}><View style={s.top}><Text style={s.who}>{q.name}</Text><Text style={s.when}>{timeAgo(q.createdAt)}</Text></View><Text style={s.body}>{q.body}</Text></View>)}<View style={{height:100}}/></ScrollView>} function timeAgo(iso){const m=Math.floor((Date.now()-new Date(iso).getTime())/60000);if(m<1)return'just now';if(m<60)return`${m}m ago`;const h=Math.floor(m/60);if(h<24)return`${h}h ago`;return`${Math.floor(h/24)}d ago`} const s=StyleSheet.create({screen:{flex:1,backgroundColor:COLORS.bg},content:{padding:20},eyebrow:{fontSize:11,fontWeight:'600',letterSpacing:2,color:COLORS.gold,marginBottom:14},form:{borderRadius:22,padding:20,backgroundColor:COLORS.surface,borderWidth:1,borderColor:COLORS.borderSoft,marginBottom:20},label:{fontSize:9,letterSpacing:1.3,color:COLORS.text3,marginBottom:7},input:{backgroundColor:COLORS.bgRaise,borderWidth:1,borderColor:COLORS.borderSoft,borderRadius:10,paddingHorizontal:13,paddingVertical:11,color:COLORS.text1,fontSize:13,marginBottom:14},area:{minHeight:105,textAlignVertical:'top'},submitRow:{flexDirection:'row',alignItems:'center',gap:12},button:{paddingVertical:11,paddingHorizontal:22,borderRadius:999,backgroundColor:COLORS.gold},buttonText:{color:COLORS.bg,fontWeight:'600'},status:{color:COLORS.goldHi,fontSize:11},hint:{fontSize:10,lineHeight:15,color:COLORS.text3,marginTop:11},card:{padding:14,borderRadius:16,backgroundColor:COLORS.surface,borderWidth:1,borderColor:COLORS.borderSoft,marginBottom:9},top:{flexDirection:'row',justifyContent:'space-between',marginBottom:6},who:{fontSize:11,color:COLORS.goldHi,fontWeight:'500'},when:{fontSize:9,color:COLORS.text3},body:{fontSize:13,lineHeight:20,color:COLORS.text2}});
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TextInput, Pressable } from 'react-native';
+import { COLORS } from '../../../shared/theme/colors';
+
+export default function QuestionsScreen() {
+  return (
+    <ScrollView style={s.screen} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
+      <Text style={s.title}>Ask a Question</Text>
+      <Text style={s.sub}>Submit your question to the circle</Text>
+      
+      <View style={s.inputBox}>
+        <TextInput
+          style={s.input}
+          placeholder="Write your question here..."
+          placeholderTextColor="rgba(245,245,240,0.4)"
+          multiline
+          numberOfLines={4}
+        />
+      </View>
+      
+      <Pressable style={s.btn}>
+        <Text style={s.btnText}>Submit Question</Text>
+      </Pressable>
+      
+      <Text style={s.sectionTitle}>Recent Questions</Text>
+      {[1, 2].map((i) => (
+        <View key={i} style={s.card}>
+          <Text style={s.q}>What is the meaning of tawakkul in daily life?</Text>
+          <Text style={s.a}>Awaiting response from the circle...</Text>
+        </View>
+      ))}
+      <View style={{ height: 100 }} />
+    </ScrollView>
+  );
+}
+
+const s = StyleSheet.create({
+  screen: { flex: 1 }, // NO backgroundColor
+  content: { padding: 20, paddingTop: 10 },
+  title: { fontSize: 28, fontWeight: '700', color: '#F5F5F0', marginBottom: 4 },
+  sub: { fontSize: 13, color: 'rgba(245,245,240,0.6)', marginBottom: 24 },
+  inputBox: {
+    backgroundColor: 'rgba(13,31,23,0.45)', // glass
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.10)',
+    borderRadius: 16,
+    padding: 14,
+    marginBottom: 16,
+  },
+  input: {
+    color: '#F5F5F0',
+    fontSize: 14,
+    lineHeight: 20,
+    minHeight: 80,
+    textAlignVertical: 'top',
+  },
+  btn: {
+    backgroundColor: COLORS.gold,
+    paddingVertical: 14,
+    borderRadius: 999,
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  btnText: { color: COLORS.bg, fontSize: 14, fontWeight: '700' },
+  sectionTitle: { fontSize: 16, fontWeight: '600', color: '#F5F5F0', marginBottom: 12 },
+  card: {
+    padding: 16,
+    borderRadius: 16,
+    backgroundColor: 'rgba(13,31,23,0.45)', // glass
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
+    marginBottom: 10,
+  },
+  q: { fontSize: 14, color: '#F5F5F0', fontWeight: '600', marginBottom: 6 },
+  a: { fontSize: 12, color: 'rgba(245,245,240,0.5)', fontStyle: 'italic' },
+});

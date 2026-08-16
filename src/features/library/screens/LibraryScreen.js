@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { COLORS } from '../../../shared/theme/colors';
+import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import Icon from '../../../shared/components/Icon';
+import { COLORS } from '../../../shared/theme/colors';
 
 const CATEGORIES = [
   { key: 'videos', title: 'Videos', subtitle: 'Lectures & Lessons', icon: 'play', color: ['#1B4332', '#2D6A4F'] },
@@ -11,33 +11,33 @@ const CATEGORIES = [
 
 export default function LibraryScreen({ onNavigateCategory }) {
   return (
-    <View style={s.screen}>
-      <Text style={s.pageTitle}>The Library</Text>
-      <Text style={s.pageSub}>Select a collection</Text>
+    <ScrollView style={s.screen} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
+      <Text style={s.title}>The Library</Text>
+      <Text style={s.sub}>Select a collection</Text>
 
       <View style={s.grid}>
         {CATEGORIES.map((cat) => (
-          <Pressable
-            key={cat.key}
-            style={s.card}
-            onPress={() => onNavigateCategory(cat.key)}
-          >
+          <Pressable key={cat.key} style={s.card} onPress={() => onNavigateCategory(cat.key)}>
             <View style={[s.iconCircle, { backgroundColor: cat.color[0] + '50' }]}>
               <Icon name={cat.icon} size={28} color={COLORS.goldHi} />
             </View>
-            <Text style={s.cardTitle}>{cat.title}</Text>
-            <Text style={s.cardSub}>{cat.subtitle}</Text>
+            <View>
+              <Text style={s.cardTitle}>{cat.title}</Text>
+              <Text style={s.cardSub}>{cat.subtitle}</Text>
+            </View>
           </Pressable>
         ))}
       </View>
-    </View>
+      <View style={{ height: 100 }} />
+    </ScrollView>
   );
 }
 
 const s = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: COLORS.bg, paddingHorizontal: 20, paddingTop: 20 },
-  pageTitle: { fontSize: 28, fontWeight: '700', color: COLORS.text1, marginBottom: 4 },
-  pageSub: { fontSize: 13, color: COLORS.text3, marginBottom: 24 },
+  screen: { flex: 1 }, // NO backgroundColor
+  content: { padding: 20, paddingTop: 10 },
+  title: { fontSize: 28, fontWeight: '700', color: '#F5F5F0', marginBottom: 4 },
+  sub: { fontSize: 13, color: 'rgba(245,245,240,0.6)', marginBottom: 24 },
   grid: { gap: 12 },
   card: {
     flexDirection: 'row',
@@ -45,9 +45,9 @@ const s = StyleSheet.create({
     gap: 16,
     padding: 18,
     borderRadius: 18,
-    backgroundColor: COLORS.surface,
+    backgroundColor: 'rgba(13,31,23,0.45)', // glass
     borderWidth: 1,
-    borderColor: COLORS.borderSoft,
+    borderColor: 'rgba(255,255,255,0.08)',
   },
   iconCircle: {
     width: 52,
@@ -56,6 +56,6 @@ const s = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  cardTitle: { fontSize: 17, fontWeight: '700', color: COLORS.text1, marginBottom: 2 },
-  cardSub: { fontSize: 12, color: COLORS.text3 },
+  cardTitle: { fontSize: 17, fontWeight: '700', color: '#F5F5F0', marginBottom: 2 },
+  cardSub: { fontSize: 12, color: 'rgba(245,245,240,0.6)' },
 });

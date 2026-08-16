@@ -1,1 +1,39 @@
-import React from 'react'; import {ScrollView,Text,View,StyleSheet} from 'react-native'; import {COLORS} from '../../../shared/theme/colors'; import {teachings} from '../data/teachingsData'; export default function TeachingsScreen(){return <ScrollView style={s.screen} contentContainerStyle={s.content}><Text style={s.eyebrow}>TEACHINGS</Text><View style={s.feature}><Text style={s.quote}>“</Text><Text style={s.featureText}>{teachings[0].text}</Text><Text style={s.small}>{teachings[0].tag}</Text></View>{teachings.slice(1).map(x=><View key={x.tag} style={s.row}><Text style={s.text}>{x.text}</Text><Text style={s.small}>{x.tag}</Text></View>)}<View style={{height:100}}/></ScrollView>} const s=StyleSheet.create({screen:{flex:1,backgroundColor:COLORS.bg},content:{padding:20},eyebrow:{fontSize:11,fontWeight:'600',letterSpacing:2,color:COLORS.gold,marginBottom:14},feature:{borderRadius:22,padding:25,backgroundColor:COLORS.surface,borderWidth:1,borderColor:COLORS.border,alignItems:'center',marginBottom:18},quote:{fontSize:38,color:COLORS.gold,opacity:.55},featureText:{fontSize:22,lineHeight:31,fontStyle:'italic',color:COLORS.text1,textAlign:'center'},row:{padding:16,borderRadius:16,backgroundColor:COLORS.surface,borderWidth:1,borderColor:COLORS.borderSoft,marginBottom:9},text:{fontSize:18,lineHeight:27,color:COLORS.text1},small:{fontSize:10,letterSpacing:1.2,textTransform:'uppercase',color:COLORS.text3,marginTop:9}});
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { COLORS } from '../../../shared/theme/colors';
+
+export default function TeachingsScreen() {
+  return (
+    <ScrollView style={s.screen} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
+      <Text style={s.title}>Teachings</Text>
+      <Text style={s.sub}>Wisdom from the path</Text>
+      
+      {[1, 2, 3, 4, 5].map((i) => (
+        <View key={i} style={s.card}>
+          <Text style={s.cardTitle}>Teaching {i}</Text>
+          <Text style={s.cardText}>The lamp is not the light. Tend the wick, and let the flame be someone else's business.</Text>
+          <Text style={s.cardTag}>On humility</Text>
+        </View>
+      ))}
+      <View style={{ height: 100 }} />
+    </ScrollView>
+  );
+}
+
+const s = StyleSheet.create({
+  screen: { flex: 1 }, // NO backgroundColor — transparent
+  content: { padding: 20, paddingTop: 10 },
+  title: { fontSize: 28, fontWeight: '700', color: '#F5F5F0', marginBottom: 4 },
+  sub: { fontSize: 13, color: 'rgba(245,245,240,0.6)', marginBottom: 24 },
+  card: {
+    padding: 16,
+    borderRadius: 16,
+    backgroundColor: 'rgba(13,31,23,0.45)', // glass
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
+    marginBottom: 12,
+  },
+  cardTitle: { fontSize: 16, fontWeight: '700', color: '#F5F5F0', marginBottom: 6 },
+  cardText: { fontSize: 14, color: 'rgba(245,245,240,0.85)', lineHeight: 20, fontStyle: 'italic', marginBottom: 8 },
+  cardTag: { fontSize: 10, letterSpacing: 1, color: COLORS.gold, textTransform: 'uppercase' },
+});

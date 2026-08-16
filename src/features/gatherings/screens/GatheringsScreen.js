@@ -1,1 +1,44 @@
-import React,{useEffect,useMemo,useState} from 'react'; import {ScrollView,Text,View,StyleSheet} from 'react-native'; import {COLORS} from '../../../shared/theme/colors'; import {getGatherings} from '../data/gatheringsData'; export default function GatheringsScreen(){const gatherings=useMemo(()=>getGatherings(),[]); const next=gatherings[0]; const [now,setNow]=useState(Date.now()); useEffect(()=>{const t=setInterval(()=>setNow(Date.now()),60000);return()=>clearInterval(t)},[]); const d=Math.max(0,next.date.getTime()-now); const days=Math.floor(d/86400000),hours=Math.floor(d%86400000/3600000),mins=Math.floor(d%3600000/60000); return <ScrollView style={s.screen} contentContainerStyle={s.content}><Text style={s.eyebrow}>UPCOMING GATHERINGS</Text><View style={s.next}><Text style={s.nextEyebrow}>NEXT GATHERING</Text><Text style={s.nextTitle}>{next.title}</Text><View style={s.count}>{[['days',days],['hrs',hours],['min',mins]].map(([l,v])=><View style={s.cell} key={l}><Text style={s.num}>{v}</Text><Text style={s.lab}>{l}</Text></View>)}</View></View>{gatherings.map(g=><View style={s.card} key={g.title}><View style={s.date}><Text style={s.dateNum}>{g.date.getDate()}</Text><Text style={s.dateMonth}>{g.date.toLocaleString('en',{month:'short'})}</Text></View><View style={s.txt}><Text style={s.title}>{g.title}</Text><Text style={s.sub}>{g.location}</Text></View><Text style={s.badge}>{g.badge}</Text></View>)}<View style={{height:100}}/></ScrollView>} const s=StyleSheet.create({screen:{flex:1,backgroundColor:COLORS.bg},content:{padding:20},eyebrow:{fontSize:11,fontWeight:'600',letterSpacing:2,color:COLORS.gold,marginBottom:14},next:{borderRadius:22,padding:24,backgroundColor:COLORS.surface,borderWidth:1,borderColor:COLORS.border,alignItems:'center',marginBottom:22},nextEyebrow:{fontSize:10,letterSpacing:2,color:COLORS.gold},nextTitle:{fontSize:20,fontWeight:'600',color:COLORS.text1,textAlign:'center',marginVertical:15},count:{flexDirection:'row',gap:10},cell:{width:64,paddingVertical:10,borderRadius:10,backgroundColor:'rgba(5,15,10,.35)',borderWidth:1,borderColor:COLORS.borderSoft,alignItems:'center'},num:{fontSize:22,color:COLORS.goldHi,fontWeight:'600'},lab:{fontSize:9,textTransform:'uppercase',letterSpacing:1,color:COLORS.text3},card:{flexDirection:'row',alignItems:'center',gap:13,padding:15,borderRadius:16,backgroundColor:COLORS.surface,borderWidth:1,borderColor:COLORS.borderSoft,marginBottom:9},date:{width:50,paddingVertical:8,borderRadius:10,backgroundColor:COLORS.surface2,alignItems:'center'},dateNum:{fontSize:20,color:COLORS.goldHi,fontWeight:'600'},dateMonth:{fontSize:9,color:COLORS.text3,textTransform:'uppercase'},txt:{flex:1},title:{fontSize:14,color:COLORS.text1,fontWeight:'500',marginBottom:3},sub:{fontSize:11,color:COLORS.text3},badge:{fontSize:9,letterSpacing:.7,textTransform:'uppercase',color:COLORS.goldHi,borderWidth:1,borderColor:COLORS.border,borderRadius:999,paddingHorizontal:8,paddingVertical:4}});
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { COLORS } from '../../../shared/theme/colors';
+
+export default function GatheringsScreen() {
+  return (
+    <ScrollView style={s.screen} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
+      <Text style={s.title}>Gatherings</Text>
+      <Text style={s.sub}>Upcoming circles of remembrance</Text>
+      
+      {[1, 2, 3].map((i) => (
+        <View key={i} style={s.card}>
+          <Text style={s.cardDay}>Saturday</Text>
+          <Text style={s.cardDate}>March {10 + i}, 2026</Text>
+          <Text style={s.cardTime}>After Maghrib · 7:00 PM</Text>
+          <View style={s.tag}>
+            <Text style={s.tagText}>Dhikr & Sama</Text>
+          </View>
+        </View>
+      ))}
+      <View style={{ height: 100 }} />
+    </ScrollView>
+  );
+}
+
+const s = StyleSheet.create({
+  screen: { flex: 1 }, // NO backgroundColor
+  content: { padding: 20, paddingTop: 10 },
+  title: { fontSize: 28, fontWeight: '700', color: '#F5F5F0', marginBottom: 4 },
+  sub: { fontSize: 13, color: 'rgba(245,245,240,0.6)', marginBottom: 24 },
+  card: {
+    padding: 18,
+    borderRadius: 16,
+    backgroundColor: 'rgba(13,31,23,0.45)', // glass
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
+    marginBottom: 12,
+  },
+  cardDay: { fontSize: 12, color: COLORS.gold, fontWeight: '600', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 },
+  cardDate: { fontSize: 20, fontWeight: '700', color: '#F5F5F0', marginBottom: 4 },
+  cardTime: { fontSize: 13, color: 'rgba(245,245,240,0.7)', marginBottom: 10 },
+  tag: { alignSelf: 'flex-start', backgroundColor: 'rgba(201,168,104,0.15)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 999 },
+  tagText: { fontSize: 11, color: COLORS.goldHi, fontWeight: '600' },
+});

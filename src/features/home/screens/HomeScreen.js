@@ -35,7 +35,7 @@ export default function HomeScreen({ onNavigate }) {
   };
 
   return (
-    <ScrollView style={s.screen} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
       <Animated.View style={{ opacity: fade, transform: [{ translateY: lift }] }}>
         
         {/* 1. Flag at the very top */}
@@ -43,7 +43,7 @@ export default function HomeScreen({ onNavigate }) {
           <GreenDomeStrip />
         </View>
 
-        {/* 2. Headline over the flag */}
+        {/* 2. Headline */}
         <View style={s.hero}>
           <ScatteredStars />
           <Text style={s.headline}>Four Doors{'\n'}Into the Heart</Text>
@@ -94,14 +94,14 @@ export default function HomeScreen({ onNavigate }) {
           </Pressable>
         </View>
 
-        {/* 6. Teaching of the Day */}
+        {/* 6. Teaching */}
         <SectionTitle title="Teaching of the day" more onPress={() => onNavigate('teachings')} />
         <View style={s.teachRow}>
           <Text style={s.teachText}>{teachingOfDay.text}</Text>
           <Text style={s.tag}>{teachingOfDay.tag}</Text>
         </View>
 
-        {/* 7. Library Categories */}
+        {/* 7. Library */}
         <SectionTitle title="The Library" more onPress={() => onNavigate('library')} />
         <View style={s.libGrid}>
           {libraryCategories.map((cat) => (
@@ -133,17 +133,14 @@ function SectionTitle({ title, more, onPress }) {
 }
 
 const s = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: COLORS.bg },
   content: { paddingTop: 10 },
 
-  // Flag at the very top
   flagTop: {
     marginTop: -10,
     marginBottom: -30,
     zIndex: 0,
   },
 
-  // Hero — text only, no badge, no lantern
   hero: {
     position: 'relative',
     alignItems: 'center',
@@ -157,16 +154,19 @@ const s = StyleSheet.create({
     fontSize: 30,
     lineHeight: 36,
     fontWeight: '700',
-    color: COLORS.text1,
+    color: '#F5F5F0',
     textAlign: 'center',
     marginTop: 8,
     zIndex: 2,
+    textShadowColor: 'rgba(0,0,0,0.5)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 6,
   },
 
   sub: {
     fontSize: 13,
     lineHeight: 20,
-    color: COLORS.text2,
+    color: 'rgba(245,245,240,0.85)',
     textAlign: 'center',
     maxWidth: 330,
     marginTop: 8,
@@ -185,17 +185,17 @@ const s = StyleSheet.create({
   actions: { flexDirection: 'row', gap: 10, marginTop: 18, marginBottom: 5, paddingHorizontal: 20 },
   btn: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 12, borderRadius: 999 },
   goldBtn: { backgroundColor: COLORS.gold },
-  lineBtn: { borderWidth: 1, borderColor: COLORS.border },
+  lineBtn: { borderWidth: 1, borderColor: 'rgba(255,255,255,0.15)' },
   goldBtnText: { color: COLORS.bg, fontSize: 13, fontWeight: '600' },
-  lineBtnText: { color: COLORS.text1, fontSize: 13, fontWeight: '500' },
+  lineBtnText: { color: '#F5F5F0', fontSize: 13, fontWeight: '500' },
 
   sectionTitle: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginTop: 30, marginBottom: 12, paddingHorizontal: 20 },
-  sectionTitleText: { fontSize: 18, fontWeight: '600', color: COLORS.text1 },
+  sectionTitleText: { fontSize: 18, fontWeight: '600', color: '#F5F5F0' },
   more: { fontSize: 12, color: COLORS.gold },
 
-  teachRow: { marginHorizontal: 20, padding: 16, borderRadius: 16, backgroundColor: COLORS.surface, borderWidth: 1, borderColor: COLORS.borderSoft, shadowColor: '#000', shadowOpacity: 0.24, shadowRadius: 5, elevation: 1 },
-  teachText: { fontSize: 18, lineHeight: 27, fontStyle: 'italic', color: COLORS.text1 },
-  tag: { fontSize: 10, letterSpacing: 1, color: COLORS.text3, textTransform: 'uppercase', marginTop: 9 },
+  teachRow: { marginHorizontal: 20, padding: 16, borderRadius: 16, backgroundColor: 'rgba(13,31,23,0.45)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' },
+  teachText: { fontSize: 18, lineHeight: 27, fontStyle: 'italic', color: '#F5F5F0' },
+  tag: { fontSize: 10, letterSpacing: 1, color: 'rgba(245,245,240,0.6)', textTransform: 'uppercase', marginTop: 9 },
 
   libGrid: { flexDirection: 'row', gap: 10, paddingHorizontal: 20, marginBottom: 10 },
   libCard: {
@@ -203,9 +203,9 @@ const s = StyleSheet.create({
     alignItems: 'center',
     padding: 14,
     borderRadius: 16,
-    backgroundColor: COLORS.surface,
+    backgroundColor: 'rgba(13,31,23,0.40)',
     borderWidth: 1,
-    borderColor: COLORS.borderSoft,
+    borderColor: 'rgba(255,255,255,0.08)',
     gap: 8,
   },
   libIconBox: {
@@ -216,7 +216,7 @@ const s = StyleSheet.create({
     justifyContent: 'center',
   },
   libText: { alignItems: 'center', gap: 2 },
-  libTitle: { fontSize: 13, fontWeight: '700', color: COLORS.text1 },
-  libSub: { fontSize: 10, color: COLORS.text3, textAlign: 'center' },
+  libTitle: { fontSize: 13, fontWeight: '700', color: '#F5F5F0' },
+  libSub: { fontSize: 10, color: 'rgba(245,245,240,0.6)', textAlign: 'center' },
   libCount: { fontSize: 11, fontWeight: '600', color: COLORS.gold, marginTop: 2 },
 });
